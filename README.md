@@ -2,6 +2,8 @@
 
 A [copier](https://copier.readthedocs.io/) template for opinionated Python projects.
 
+The intention for this is a **starting point** for new python projects that I create.
+
 ## Features
 
 - uv build backend
@@ -22,17 +24,53 @@ A [copier](https://copier.readthedocs.io/) template for opinionated Python proje
 uvx copier copy gh:SrzStephen/python-copier-template my-new-project
 ```
 
+## Deployed file structure
+
+A few files get added based on
+
+```zsh
+➜  my-new-project tree -a
+.
+my-new-project
+├── .devcontainer
+│   ├── devcontainer.json
+│   ├── post-create.sh
+│   └── post-start.sh
+├── .editorconfig
+├── .github
+│   ├── ISSUE_TEMPLATE
+│   │   ├── bug_report.md
+│   │   └── feature_request.md
+│   └── workflows
+│       ├── ci.yml
+│       └── terraform.yml
+├── .gitignore
+├── justfile
+├── .pre-commit-config.yaml
+├── pyproject.toml
+├── README.md
+├── src
+│   └── mytool
+│       ├── cli.py
+│       ├── __init__.py
+│       └── py.typed
+└── tests
+    ├── __init__.py
+    └── test_cli.py
+
+```
+
 ## Questions
 
-| Question          | Description                                    |
-| ----------------- | ---------------------------------------------- |
-| `project_name`    | Human-readable name                            |
-| `package_name`    | Python package name (snake_case, auto-derived) |
-| `description`     | One-line description                           |
-| `author_name`     | Your name                                      |
-| `author_email`    | Your email                                     |
-| `github_username` | GitHub username (default: `SrzStephen`)        |
+| Question          | Description                                                      |
+| ----------------- | ---------------------------------------------------------------- |
+| `project_name`    | Human-readable name                                              |
+| `package_name`    | Python package name (snake_case, auto-derived)                   |
+| `description`     | One-line description                                             |
+| `author_name`     | Your name                                                        |
+| `author_email`    | Your email                                                       |
+| `github_username` | GitHub username (default: `SrzStephen`)                          |
 | `python_version`  | `3.12` / `3.13` / `3.14` / `3.12,3.13` / `3.13,3.14` (CI matrix) |
-| `cli_command`     | CLI command name (auto-derived)                |
-| `use_terraform`   | Include Terraform CI/CD workflow (default: no) |
-| `use_cuda`        | CUDA/GPU support in devcontainer (default: no) |
+| `cli_command`     | CLI command name (auto-derived)                                  |
+| `use_terraform`   | Include Terraform CI/CD workflow (default: no)                   |
+| `use_cuda`        | CUDA/GPU support in devcontainer (default: no)                   |

@@ -39,9 +39,26 @@ The usual steps
 ## Pre-commit
 Pre-commit gets installed as part of the `uv` dev dependencies
 
-Register pre-commit to run the `.pre-commit-config.yaml` on commit via `pre-commit install`
+Register pre-commit to run the `.pre-commit-config.yaml` on commit via `uv run pre-commit install`
 
-Run ad hoc with `pre-commit`
+Run ad hoc with `uv run pre-commit`
+
+### Commit format
+pre-commit in this repository is set to enforce [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/).
+```
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+Examples:
+```
+feat: allow provided config object to extend other configs
+feat!: send an email to the customer when a product is shipped
+feat(api)!: send an email to the customer when a product is shipped
+```
 
 {% if use_terraform %}
 ## Terraform
