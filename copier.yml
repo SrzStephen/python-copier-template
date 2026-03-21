@@ -3,6 +3,7 @@ _templates_suffix: .jinja
 _message_after_copy: "Files copied to: {{ _copier_conf.dst_path }}"
 _exclude:
   - "{% if not use_terraform %}.github/workflows/terraform.yml{% endif %}"
+  - "{% if not use_terraform %}infra{% endif %}"
 
 project_name:
   type: str

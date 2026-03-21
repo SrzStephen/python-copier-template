@@ -23,5 +23,5 @@ pre-commit:
     uv run pre-commit run --all-files
 
 setup:
-    uv sync
+    uv sync --all-groups
     uv run pre-commit install

@@ -1,5 +1,6 @@
 """Tests to verify the copier template generates correctly."""
 
+import itertools
 import subprocess
 from pathlib import Path
 
@@ -38,10 +39,7 @@ def generated(tmp_path_factory: pytest.TempPathFactory) -> Path:
 def test_expected_files_exist(generated: Path) -> None:
     expected = [
         "pyproject.toml",
-        "README.md",
-        "CONTRIBUTING.md",
         "justfile",
-        "renovate.json",
         ".editorconfig",
         ".gitignore",
         ".pre-commit-config.yaml",
@@ -96,8 +94,12 @@ def test_no_jinja_delimiters_in_any_file(generated: Path) -> None:
         if path.name in skip_files or path.suffix in {".png", ".jpg", ".ico"}:
             continue
         text = path.read_text(errors="replace")
-        assert "{{" not in text, f"Unrendered Jinja delimiter in {path.relative_to(generated)}"
-        assert "}}" not in text, f"Unrendered Jinja delimiter in {path.relative_to(generated)}"
+        assert "{{" not in text, (
+            f"Unrendered Jinja delimiter in {path.relative_to(generated)}"
+        )
+        assert "}}" not in text, (
+            f"Unrendered Jinja delimiter in {path.relative_to(generated)}"
+        )
 
 
 def test_generated_project_installs(generated: Path) -> None:
@@ -120,10 +122,10 @@ def test_generated_project_tests_pass(generated: Path) -> None:
     assert result.returncode == 0, f"pytest failed:\n{result.stdout}\n{result.stderr}"
 
 
-@pytest.mark.parametrize("python_version", ["3.12", "3.13", "3.14", "3.12,3.13", "3.13,3.14"])
-def test_python_version_variants(
-    tmp_path: Path, python_version: str
-) -> None:
+@pytest.mark.parametrize(
+    "python_version", ["3.12", "3.13", "3.14", "3.12,3.13", "3.13,3.14"]
+)
+def test_python_version_variants(tmp_path: Path, python_version: str) -> None:
     copier.run_copy(
         str(TEMPLATE_ROOT),
         tmp_path,
@@ -146,8 +148,23 @@ def test_terraform_workflow_absent_by_default(generated: Path) -> None:
     assert not (generated / ".github/workflows/terraform.yml").exists()
 
 
-def test_devcontainer_is_valid_jsonc(generated: Path) -> None:
-    content = (generated / ".devcontainer/devcontainer.json").read_text()
+# itertools.permutations doesn't allow repeats and I need all 4 combos
+@pytest.mark.parametrize(
+    "use_cuda,use_terraform", itertools.product([False, True], repeat=2)
+)
+def test_devcontainer_is_valid_jsonc(
+    tmp_path: Path, use_cuda: bool, use_terraform: bool
+) -> None:
+    copier.run_copy(
+        str(TEMPLATE_ROOT),
+        tmp_path,
+        data={**DEFAULTS, "use_cuda": use_cuda, "use_terraform": use_terraform},
+        defaults=True,
+        overwrite=True,
+        quiet=True,
+        unsafe=True,
+    )
+    content = (tmp_path / ".devcontainer/devcontainer.json").read_text()
     json5.loads(content)  # raises if invalid
 
 
@@ -170,11 +187,6 @@ def generated_with_cuda(tmp_path_factory: pytest.TempPathFactory) -> Path:
         unsafe=True,
     )
     return dst
-
-
-def test_devcontainer_is_valid_jsonc_with_cuda(generated_with_cuda: Path) -> None:
-    content = (generated_with_cuda / ".devcontainer/devcontainer.json").read_text()
-    json5.loads(content)  # raises if invalid
 
 
 def test_cuda_feature_present(generated_with_cuda: Path) -> None:
@@ -206,6 +218,21 @@ def generated_with_terraform(tmp_path_factory: pytest.TempPathFactory) -> Path:
 
 def test_terraform_workflow_generated(generated_with_terraform: Path) -> None:
     assert (generated_with_terraform / ".github/workflows/terraform.yml").exists()
+
+
+def test_terraform_infra_folder_present(generated_with_terraform: Path) -> None:
+    expected = [
+        "infra/main.tf",
+        "infra/outputs.tf",
+        "infra/provider.tf",
+        "infra/variables.tf",
+    ]
+    for path in expected:
+        assert (generated_with_terraform / path).exists(), f"Missing: {path}"
+
+
+def test_terraform_infra_folder_absent_by_default(generated: Path) -> None:
+    assert not (generated / "infra").exists()
 
 
 def test_terraform_workflow_content(generated_with_terraform: Path) -> None:

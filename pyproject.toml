@@ -3,14 +3,16 @@ name = "python-copier-template"
 version = "0.1.0"
 description = "Copier template for opinionated Python projects"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "copier>=9.13.0",
+]
 
 [dependency-groups]
 dev = [
-    "copier>=9",
     "json5>=0.13.0",
     "pre-commit>=4.5.1",
     "pytest>=8",
+    "ty>=0.0.24",
 ]
 
 [tool.pytest.ini_options]

@@ -17,6 +17,7 @@ The intention for this is a **starting point** for new python projects that I cr
 - typer CLI entrypoint via uv script
 - justfile for common commands
 - GitHub Issue templates (bug report, feature request)
+- Support for terraform linting
 
 ## Usage
 
@@ -45,6 +46,12 @@ my-new-project
 │       ├── ci.yml
 │       └── terraform.yml
 ├── .gitignore
+├── infra
+│   ├── main.tf
+│   ├── outputs.tf
+│   ├── provider.tf
+│   └── variables.tf
+├── variables.tf
 ├── justfile
 ├── .pre-commit-config.yaml
 ├── pyproject.toml

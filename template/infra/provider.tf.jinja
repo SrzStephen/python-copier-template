@@ -1,0 +1,14 @@
+terraform {
+  required_version = ">= 1.14"
+
+  cloud {
+    hostname     = "app.terraform.io"
+    organization = "stephenorg"
+
+    workspaces {
+      # Workspace is auto-created on first `terraform init` if it does not exist.
+      project = "{{ project_name }}"
+      name    = "{{ project_name }}"
+    }
+  }
+}
