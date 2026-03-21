@@ -1,0 +1,64 @@
+# {{ project_name }}
+
+[![CI](https://github.com/{{ github_username }}/{{ project_name | lower | replace(' ', '-') }}/actions/workflows/ci.yml/badge.svg)](https://github.com/{{ github_username }}/{{ project_name | lower | replace(' ', '-') }}/actions/workflows/ci.yml)
+
+{{ description }}
+
+## Usage
+
+```bash
+{{ cli_command }} --help
+```
+
+## Development
+
+Common tasks are managed via [just](https://github.com/casey/just):
+
+| Command         | Description                        |
+|-----------------|------------------------------------|
+| `just`          | Run lint, typecheck, and tests     |
+| `just lint`     | Lint and check formatting          |
+| `just lint-fix` | Auto-fix lint and formatting       |
+| `just typecheck`| Run type checking                  |
+| `just test`     | Run tests                          |
+| `just test-fast`| Run tests in parallel (no cov)     |
+| `just pre-commit`| Run pre-commit on all files       |
+| `just setup`    | Install deps and pre-commit hooks  |
+
+
+## Setup
+
+This repository is set up to run out of a [devcontainer](https://code.visualstudio.com/docs/devcontainers/create-dev-container) via Visual Studio Code.
+
+The usual steps
+
+## Python
+* install [uv](https://docs.astral.sh/uv/getting-started/installation/)
+* run `uv sync --all-groups` to install dependencies
+
+## Pre-commit
+Pre-commit gets installed as part of the `uv` dev dependencies
+
+Register pre-commit to run the `.pre-commit-config.yaml` on commit via `pre-commit install`
+
+Run ad hoc with `pre-commit`
+
+{% if use_terraform %}
+## Terraform
+
+* [install terraform](https://developer.hashicorp.com/terraform/install)
+* navigate to the terraform directory (generally `infra`)
+* terraform init
+
+{% endif %}
+
+## Just
+
+* install [just](https://github.com/casey/just?tab=readme-ov-file#installation)
+
+{% if use_cuda %}
+## CUDA
+For Cuda support to work you need in install the [Nvidia Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/index.html).
+
+Based on a quick google search, the only way for this to work under windows is to use docker with WSL, but I have only tested this in linux.
+{% endif %}

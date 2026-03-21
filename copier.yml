@@ -1,0 +1,58 @@
+_subdirectory: template
+_templates_suffix: .jinja
+_message_after_copy: "Files copied to: {{ _copier_conf.dst_path }}"
+_exclude:
+  - "{% if not use_terraform %}.github/workflows/terraform.yml{% endif %}"
+
+project_name:
+  type: str
+  help: "Human-readable project name (e.g. 'My Tool')"
+  default: "mytool"
+
+package_name:
+  type: str
+  help: "Python package name (snake_case, auto-derived)"
+  default: "{{ project_name | lower | replace('-', '_') | replace(' ', '_') }}"
+
+description:
+  type: str
+  help: "One-line project description"
+
+author_name:
+  type: str
+  help: "Your full name"
+
+author_email:
+  type: str
+  help: "Your email address"
+
+github_username:
+  type: str
+  help: "Your GitHub username (used in CI badges and renovate)"
+  default: "SrzStephen"
+
+python_version:
+  type: str
+  help: "Python version(s) to target"
+  choices:
+    Python 3.12: "3.12"
+    Python 3.13: "3.13"
+    Python 3.14: "3.14"
+    Python 3.12 + 3.13 (CI matrix): "3.12,3.13"
+    Python 3.13 + 3.14 (CI matrix): "3.13,3.14"
+  default: "3.13"
+
+cli_command:
+  type: str
+  help: "CLI command name (e.g. 'mytool')"
+  default: "{{ package_name | replace('_', '-') }}"
+
+use_terraform:
+  type: bool
+  help: "Include Terraform CI/CD workflow?"
+  default: false
+
+use_cuda:
+  type: bool
+  help: "Requires NVIDIA GPU / CUDA support in the devcontainer?"
+  default: false

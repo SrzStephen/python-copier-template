@@ -1,0 +1,15 @@
+"""CLI entrypoint for {{ project_name }}."""
+
+import typer
+
+app = typer.Typer(help="{{ description }}")
+
+
+@app.command()
+def main() -> None:
+    """Run {{ project_name }}."""
+    typer.echo("Hello from {{ project_name }}!")
+
+
+if __name__ == "__main__":
+    app()
