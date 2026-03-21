@@ -1,6 +1,10 @@
 #!/bin/bash
 set -euo pipefail
 
+# The .cache/uv bind mount causes Docker to create /home/vscode/.cache as root-owned.
+# Fix ownership so vscode can create subdirectories (e.g. pre-commit).
+sudo chown vscode:vscode /home/vscode/.cache
+
 if [ -f pyproject.toml ]; then
   echo "pyproject.toml found, running uv sync..."
   uv sync --all-extras

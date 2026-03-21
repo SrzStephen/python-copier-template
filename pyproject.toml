@@ -9,6 +9,7 @@ dependencies = []
 dev = [
     "copier>=9",
     "json5>=0.13.0",
+    "pre-commit>=4.5.1",
     "pytest>=8",
 ]
 
