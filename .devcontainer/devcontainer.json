@@ -7,8 +7,10 @@
     "ghcr.io/devcontainer-community/devcontainer-features/astral.sh-uv:1": {
       "shellautocompletion": true
     },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": { "moby": false },
     "ghcr.io/devcontainer-community/devcontainer-features/github.com-cli:1": {},
     "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/node:1": {},
     "ghcr.io/pirpedro/features/just:1": {},
     "ghcr.io/devcontainers/features/common-utils": {
       "installZsh": true,

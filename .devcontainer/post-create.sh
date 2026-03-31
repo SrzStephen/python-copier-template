@@ -5,6 +5,8 @@ set -euo pipefail
 # Fix ownership so vscode can create subdirectories (e.g. pre-commit).
 sudo chown vscode:vscode /home/vscode/.cache
 
+npm install -g @devcontainers/cli
+
 if [ -f pyproject.toml ]; then
   echo "pyproject.toml found, running uv sync..."
   uv sync --all-extras

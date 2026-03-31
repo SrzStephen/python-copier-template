@@ -17,3 +17,8 @@ dev = [
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+addopts = "-m 'not slow'"
+markers = [
+    "devcontainer_build: tests that build a devcontainer image via the devcontainer CLI (require Docker)",
+    "slow: tests that are slow to run",
+]
