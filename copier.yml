@@ -57,3 +57,13 @@ use_cuda:
   type: bool
   help: "Requires NVIDIA GPU / CUDA support in the devcontainer?"
   default: false
+
+use_aws:
+  type: bool
+  help: "Include AWS CLI and AWS Toolkit extension in the devcontainer?"
+  default: false
+
+use_azure:
+  type: bool
+  help: "Include Azure CLI and Azure extension in the devcontainer?"
+  default: false

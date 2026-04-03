@@ -1,6 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
+npm install -g @devcontainers/cli @anthropic-ai/claude-code
+
 if [ -f pyproject.toml ]; then
   echo "pyproject.toml found, running uv sync..."
   uv sync --all-extras

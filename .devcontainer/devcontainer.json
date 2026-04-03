@@ -32,7 +32,8 @@
         "tamasfe.even-better-toml",
         "MermaidChart.vscode-mermaid-chart",
         "esbenp.prettier-vscode",
-        "astral-sh.ty"
+        "astral-sh.ty",
+        "nefrob.vscode-just-syntax"
       ],
       "settings": {
         "github.copilot.enable": {
@@ -53,16 +54,22 @@
         "python.testing.pytestArgs": ["tests"],
         "python.testing.unittestEnabled": false,
         "python.testing.pytestEnabled": true,
-        "terminal.integrated.defaultProfile.linux": "zsh"
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "vscode-just.useSingleTerminal": true
       }
     }
   },
+  "forwardPorts": [37345],
   "remoteEnv": {
     "VIRTUAL_ENV": "${containerWorkspaceFolder}/.venv",
-    "PATH": "${containerWorkspaceFolder}/.venv/bin:${containerEnv:PATH}"
+    "PATH": "${containerWorkspaceFolder}/.venv/bin:${containerEnv:PATH}",
+    "CLAUDE_OAUTH_PORT": "37345"
   },
   "mounts": [
-    "source=${localEnv:HOME}/.claude,target=/home/vscode/.claude,type=bind,consistency=cached",
-    "source=${localEnv:HOME}/.cache/uv,target=/home/vscode/.cache/uv,type=bind,consistency=cached"
+    "source=${localEnv:HOME}/.cache/uv,target=/home/vscode/.cache/uv,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.cache/devcontainer/apt_cache,target=/var/cache/apt,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.cache/devcontainer/apt_lists,target=/var/lib/apt/lists,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.claude.json,target=/home/vscode/.claude.json,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.claude/projects,target=/home/vscode/.claude/projects,type=bind,consistency=cached"
   ]
 }
