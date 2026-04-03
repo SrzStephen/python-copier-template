@@ -43,4 +43,4 @@ jobs:
         run: npm install -g @devcontainers/cli
 
       - name: Run devcontainer build tests
-        run: uv run pytest tests/test_devcontainer_build.py -v -m ''
+        run: uv run pytest tests/test_devcontainer_build.py -v -m 'slow'

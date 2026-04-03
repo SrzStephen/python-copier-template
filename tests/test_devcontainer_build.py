@@ -7,6 +7,8 @@ from pathlib import Path
 import copier
 import pytest
 
+from tests.conftest import devcontainer_variants
+
 TEMPLATE_ROOT = Path(__file__).parent.parent
 
 DEFAULTS = {
@@ -48,21 +50,22 @@ def _build(tmp_path: Path, extra_data: dict) -> subprocess.CompletedProcess:
     )
 
 
-@pytest.mark.devcontainer_build
+@pytest.mark.slow
 @devcontainer_cli
 @docker_available
-@pytest.mark.parametrize(
-    "use_terraform,use_cuda",
-    [
-        pytest.param(True, False, id="terraform"),
-        pytest.param(False, False, id="no-terraform"),
-        pytest.param(False, True, id="cuda", marks=pytest.mark.slow),
-    ],
-)
+@devcontainer_variants
 def test_devcontainer_builds(
-    tmp_path: Path, use_terraform: bool, use_cuda: bool
+    tmp_path: Path, use_terraform: bool, use_cuda: bool, use_aws: bool, use_azure: bool
 ) -> None:
-    result = _build(tmp_path, {"use_terraform": use_terraform, "use_cuda": use_cuda})
+    result = _build(
+        tmp_path,
+        {
+            "use_terraform": use_terraform,
+            "use_cuda": use_cuda,
+            "use_aws": use_aws,
+            "use_azure": use_azure,
+        },
+    )
     assert result.returncode == 0, (
-        f"devcontainer build failed (use_terraform={use_terraform}, use_cuda={use_cuda}):\n{result.stdout}\n{result.stderr}"
+        f"devcontainer build failed (use_terraform={use_terraform}, use_cuda={use_cuda}, use_aws={use_aws}, use_azure={use_azure}):\n{result.stdout}\n{result.stderr}"
     )

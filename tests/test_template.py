@@ -1,12 +1,13 @@
 """Tests to verify the copier template generates correctly."""
 
-import itertools
 import subprocess
 from pathlib import Path
 
 import copier
 import json5
 import pytest
+
+from tests.conftest import devcontainer_variants
 
 TEMPLATE_ROOT = Path(__file__).parent.parent
 TEMPLATE_DIR = TEMPLATE_ROOT / "template"
@@ -148,17 +149,20 @@ def test_terraform_workflow_absent_by_default(generated: Path) -> None:
     assert not (generated / ".github/workflows/terraform.yml").exists()
 
 
-# itertools.permutations doesn't allow repeats and I need all 4 combos
-@pytest.mark.parametrize(
-    "use_cuda,use_terraform", itertools.product([False, True], repeat=2)
-)
+@devcontainer_variants
 def test_devcontainer_is_valid_jsonc(
-    tmp_path: Path, use_cuda: bool, use_terraform: bool
+    tmp_path: Path, use_terraform: bool, use_cuda: bool, use_aws: bool, use_azure: bool
 ) -> None:
     copier.run_copy(
         str(TEMPLATE_ROOT),
         tmp_path,
-        data={**DEFAULTS, "use_cuda": use_cuda, "use_terraform": use_terraform},
+        data={
+            **DEFAULTS,
+            "use_terraform": use_terraform,
+            "use_cuda": use_cuda,
+            "use_aws": use_aws,
+            "use_azure": use_azure,
+        },
         defaults=True,
         overwrite=True,
         quiet=True,
