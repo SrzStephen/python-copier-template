@@ -88,7 +88,13 @@ def test_ci_workflow_rendered(generated: Path) -> None:
 
 def test_no_jinja_delimiters_in_any_file(generated: Path) -> None:
     # ci.yml intentionally contains ${{ }} GitHub Actions expressions — skip it
-    skip_files = {".copier-answers.yml", "ci.yml", "terraform.yml"}
+    skip_files = {
+        ".copier-answers.yml",
+        "ci.yml",
+        "terraform.yml",
+        "aws-oidc.yml",
+        "azure-oidc.yml",
+    }
     for path in generated.rglob("*"):
         if not path.is_file():
             continue
@@ -147,6 +153,14 @@ def test_python_version_variants(tmp_path: Path, python_version: str) -> None:
 
 def test_terraform_workflow_absent_by_default(generated: Path) -> None:
     assert not (generated / ".github/workflows/terraform.yml").exists()
+
+
+def test_aws_workflow_absent_by_default(generated: Path) -> None:
+    assert not (generated / ".github/workflows/aws-oidc.yml").exists()
+
+
+def test_azure_workflow_absent_by_default(generated: Path) -> None:
+    assert not (generated / ".github/workflows/azure-oidc.yml").exists()
 
 
 @devcontainer_variants
@@ -237,6 +251,77 @@ def test_terraform_infra_folder_present(generated_with_terraform: Path) -> None:
 
 def test_terraform_infra_folder_absent_by_default(generated: Path) -> None:
     assert not (generated / "infra").exists()
+
+
+@pytest.fixture(scope="module")
+def generated_with_aws(tmp_path_factory: pytest.TempPathFactory) -> Path:
+    dst = tmp_path_factory.mktemp("project_aws")
+    copier.run_copy(
+        str(TEMPLATE_ROOT),
+        dst,
+        data={**DEFAULTS, "use_aws": True},
+        defaults=True,
+        overwrite=True,
+        quiet=True,
+        unsafe=True,
+    )
+    return dst
+
+
+def test_aws_workflow_generated(generated_with_aws: Path) -> None:
+    assert (generated_with_aws / ".github/workflows/aws-oidc.yml").exists()
+
+
+def test_aws_workflow_content(generated_with_aws: Path) -> None:
+    content = (generated_with_aws / ".github/workflows/aws-oidc.yml").read_text()
+    assert "aws-actions/configure-aws-credentials" in content
+    assert "id-token: write" in content
+    assert "role-to-assume" in content
+    assert "aws-region" in content
+    # GitHub Actions ${{ }} syntax rendered correctly
+    assert "${{ inputs.role-to-assume }}" in content
+
+
+def test_aws_devcontainer_content(generated_with_aws: Path) -> None:
+    content = (generated_with_aws / ".devcontainer/devcontainer.json").read_text()
+    assert "aws-cli" in content
+    assert "aws-toolkit-vscode" in content
+
+
+@pytest.fixture(scope="module")
+def generated_with_azure(tmp_path_factory: pytest.TempPathFactory) -> Path:
+    dst = tmp_path_factory.mktemp("project_azure")
+    copier.run_copy(
+        str(TEMPLATE_ROOT),
+        dst,
+        data={**DEFAULTS, "use_azure": True},
+        defaults=True,
+        overwrite=True,
+        quiet=True,
+        unsafe=True,
+    )
+    return dst
+
+
+def test_azure_workflow_generated(generated_with_azure: Path) -> None:
+    assert (generated_with_azure / ".github/workflows/azure-oidc.yml").exists()
+
+
+def test_azure_workflow_content(generated_with_azure: Path) -> None:
+    content = (generated_with_azure / ".github/workflows/azure-oidc.yml").read_text()
+    assert "azure/login" in content
+    assert "id-token: write" in content
+    assert "client-id" in content
+    assert "tenant-id" in content
+    assert "subscription-id" in content
+    # GitHub Actions ${{ }} syntax rendered correctly
+    assert "${{ inputs.client-id }}" in content
+
+
+def test_azure_devcontainer_content(generated_with_azure: Path) -> None:
+    content = (generated_with_azure / ".devcontainer/devcontainer.json").read_text()
+    assert "azure-cli" in content
+    assert "vscode-node-azure-pack" in content
 
 
 def test_terraform_workflow_content(generated_with_terraform: Path) -> None:

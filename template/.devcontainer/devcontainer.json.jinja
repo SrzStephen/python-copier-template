@@ -12,6 +12,7 @@
         "MermaidChart.vscode-mermaid-chart",
         "esbenp.prettier-vscode",
         "github.vscode-github-actions",
+        "GitHub.vscode-pull-request-github",
         "nefrob.vscode-just-syntax",
         "astral-sh.ty"{% if use_terraform %},
         "hashicorp.terraform"{% endif %}{% if use_aws %},
@@ -42,7 +43,7 @@
         "vscode-just.useSingleTerminal": true,
         "terminal.integrated.defaultProfile.linux": "zsh"{% if use_terraform %},
         "[terraform]": {
-          "editor.defaultFormatter": "hashicorp.terraform"
+          "editor.defaultFormatter": "hashicorp.terraform",
         }{% endif %}
       }
     }
@@ -58,12 +59,8 @@
     "ghcr.io/devcontainers/features/node:1": {},
     "ghcr.io/devcontainer-community/devcontainer-features/github.com-cli:1": {},
     "ghcr.io/devcontainers/features/git:1": {},
-    "ghcr.io/devcontainers/features/common-utils": {
-      "installZsh": true,
-      "installOhMyZsh": true,
-      "installOhMyZshConfig": true,
-      "configureZshAsDefaultShell": true,
-      "zshDefaultTheme": "robbyrussell"
+    "ghcr.io/tobiaschc/devcontainer-features/starship:1": {
+      "userShell": "zsh"
     },
     "ghcr.io/pirpedro/features/just:1": {},
     {% if use_cuda %}

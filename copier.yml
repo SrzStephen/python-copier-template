@@ -4,6 +4,8 @@ _message_after_copy: "Files copied to: {{ _copier_conf.dst_path }}"
 _exclude:
   - "{% if not use_terraform %}.github/workflows/terraform.yml{% endif %}"
   - "{% if not use_terraform %}infra{% endif %}"
+  - "{% if not use_aws %}.github/workflows/aws-oidc.yml{% endif %}"
+  - "{% if not use_azure %}.github/workflows/azure-oidc.yml{% endif %}"
 
 project_name:
   type: str

@@ -1,0 +1,38 @@
+name: Azure OIDC Authentication
+
+on:
+  workflow_call:
+    inputs:
+      subscription-id:
+        required: true
+        type: string
+      tenant-id:
+        required: true
+        type: string
+      client-id:
+        required: true
+        type: string
+    outputs:
+      subscription-id:
+        description: "Azure Subscription ID"
+        value: ${{ "{{" }} jobs.authenticate.outputs.subscription-id {{ "}}" }}
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  authenticate:
+    runs-on: ubuntu-latest
+    outputs:
+      subscription-id: ${{ "{{" }} inputs.subscription-id {{ "}}" }}
+    steps:
+      - name: Configure Azure credentials via OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ "{{" }} inputs.client-id {{ "}}" }}
+          tenant-id: ${{ "{{" }} inputs.tenant-id {{ "}}" }}
+          subscription-id: ${{ "{{" }} inputs.subscription-id {{ "}}" }}
+
+      - name: Verify Azure identity
+        run: az account show

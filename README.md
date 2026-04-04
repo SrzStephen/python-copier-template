@@ -13,11 +13,11 @@ The intention for this is a **starting point** for new python projects that I cr
 - pre-commit hooks
 - GitHub Actions CI (lint, typecheck, test — parallel jobs)
 - Optional Terraform CI/CD workflow (fmt, lint, plan, apply)
-- devcontainer (VS Code), with optional CUDA/GPU support
+- devcontainer (VS Code), with optional CUDA/GPU, AWS CLI, or Azure CLI support
+- devcontainer caches uv, apt, HuggingFace, and Claude Code auth/project history
 - typer CLI entrypoint via uv script
 - justfile for common commands
 - GitHub Issue templates (bug report, feature request)
-- Support for terraform linting
 
 ## Usage
 
@@ -81,3 +81,5 @@ my-new-project
 | `cli_command`     | CLI command name (auto-derived)                                  |
 | `use_terraform`   | Include Terraform CI/CD workflow (default: no)                   |
 | `use_cuda`        | CUDA/GPU support in devcontainer (default: no)                   |
+| `use_aws`         | AWS CLI and AWS Toolkit extension in devcontainer (default: no)  |
+| `use_azure`       | Azure CLI and Azure extension in devcontainer (default: no)      |

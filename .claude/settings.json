@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /workspaces/copier-template/template -name *.jinja -type f)",
+      "Bash(uv run:*)"
+    ]
+  }
+}

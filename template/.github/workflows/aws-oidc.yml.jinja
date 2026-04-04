@@ -1,0 +1,39 @@
+name: AWS OIDC Authentication
+
+on:
+  workflow_call:
+    inputs:
+      role-to-assume:
+        required: true
+        type: string
+      aws-region:
+        required: false
+        type: string
+        default: us-east-1
+    outputs:
+      aws-account-id:
+        description: "AWS Account ID"
+        value: ${{ "{{" }} jobs.authenticate.outputs.aws-account-id {{ "}}" }}
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  authenticate:
+    runs-on: ubuntu-latest
+    outputs:
+      aws-account-id: ${{ "{{" }} steps.sts.outputs.account {{ "}}" }}
+    steps:
+      - name: Configure AWS credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ "{{" }} inputs.role-to-assume {{ "}}" }}
+          aws-region: ${{ "{{" }} inputs.aws-region {{ "}}" }}
+
+      - name: Verify AWS identity
+        id: sts
+        run: |
+          ACCOUNT=$(aws sts get-caller-identity --query Account --output text)
+          echo "account=$ACCOUNT" >> $GITHUB_OUTPUT
+          echo "Authenticated as account: $ACCOUNT"

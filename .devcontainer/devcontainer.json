@@ -12,12 +12,8 @@
     "ghcr.io/devcontainers/features/git:1": {},
     "ghcr.io/devcontainers/features/node:1": {},
     "ghcr.io/pirpedro/features/just:1": {},
-    "ghcr.io/devcontainers/features/common-utils": {
-      "installZsh": true,
-      "installOhMyZsh": true,
-      "installOhMyZshConfig": true,
-      "configureZshAsDefaultShell": true,
-      "zshDefaultTheme": "robbyrussell"
+    "ghcr.io/tobiaschc/devcontainer-features/starship:1": {
+      "userShell": "zsh"
     }
   },
   "customizations": {
@@ -33,7 +29,9 @@
         "MermaidChart.vscode-mermaid-chart",
         "esbenp.prettier-vscode",
         "astral-sh.ty",
-        "nefrob.vscode-just-syntax"
+        "nefrob.vscode-just-syntax",
+        "github.vscode-github-actions",
+        "GitHub.vscode-pull-request-github"
       ],
       "settings": {
         "github.copilot.enable": {
@@ -55,7 +53,15 @@
         "python.testing.unittestEnabled": false,
         "python.testing.pytestEnabled": true,
         "terminal.integrated.defaultProfile.linux": "zsh",
-        "vscode-just.useSingleTerminal": true
+        "vscode-just.useSingleTerminal": true,
+        "files.exclude": {
+          "**/__pycache__": true,
+          "**/*.pyc": true,
+          "**/.worktrees": true,
+          "**/.venv": true,
+          "**/.pytest_cache": true,
+          "**/.hypothesis": true
+        }
       }
     }
   },
