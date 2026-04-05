@@ -22,7 +22,6 @@ dev = [
     "pytest-cov",
     "pytest-mock",
     "pytest-asyncio",
-    "pytest-xdist",
     "ruff",
     "ty",
 ]
@@ -33,7 +32,7 @@ exclude-newer = "3d"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-n auto --cov={{ package_name }} --cov-report=term-missing --cov-report=xml"
+addopts = "--cov={{ package_name }} --cov-report=term-missing --cov-report=xml"
 asyncio_mode = "auto"
 
 [tool.coverage.run]

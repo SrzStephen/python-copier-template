@@ -14,10 +14,10 @@ typecheck:
     uv run ty check src/
 
 test:
-    uv run pytest
+    uv run pytest -rsx
 
 test-fast:
-    uv run pytest -n auto --no-cov
+    uv run pytest --no-cov -rsx
 
 pre-commit:
     uv run pre-commit run --all-files

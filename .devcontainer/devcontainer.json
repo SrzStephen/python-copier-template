@@ -14,7 +14,8 @@
     "ghcr.io/pirpedro/features/just:1": {},
     "ghcr.io/tobiaschc/devcontainer-features/starship:1": {
       "userShell": "zsh"
-    }
+    },
+    "ghcr.io/stu-bell/devcontainer-features/claude-code:0": {}
   },
   "customizations": {
     "vscode": {
@@ -66,16 +67,30 @@
     }
   },
   "forwardPorts": [37345],
+  "portsAttributes": {
+    "37345": {
+      "label": "Claude Code OAuth",
+      "onAutoForward": "silent"
+    }
+  },
+  "otherPortsAttributes": {
+    "onAutoForward": "silent"
+  },
   "remoteEnv": {
     "VIRTUAL_ENV": "${containerWorkspaceFolder}/.venv",
     "PATH": "${containerWorkspaceFolder}/.venv/bin:${containerEnv:PATH}",
     "CLAUDE_OAUTH_PORT": "37345"
   },
+  "containerEnv": {
+    "NODE_OPTIONS": "--dns-result-order=ipv4first",
+    "CLAUDE_OAUTH_PORT": "37345"
+  },
   "mounts": [
     "source=${localEnv:HOME}/.cache/uv,target=/home/vscode/.cache/uv,type=bind,consistency=cached",
-    "source=${localEnv:HOME}/.cache/devcontainer/apt_cache,target=/var/cache/apt,type=bind,consistency=cached",
-    "source=${localEnv:HOME}/.cache/devcontainer/apt_lists,target=/var/lib/apt/lists,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.cache/huggingface,target=/home/vscode/.cache/huggingface,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.cache/devcontainer,target=/var/cache/apt,type=bind,consistency=cached",
     "source=${localEnv:HOME}/.claude.json,target=/home/vscode/.claude.json,type=bind,consistency=cached",
     "source=${localEnv:HOME}/.claude/projects,target=/home/vscode/.claude/projects,type=bind,consistency=cached"
-  ]
+  ],
+  "initializeCommand": "mkdir -p ${localEnv:HOME}/.cache/uv ${localEnv:HOME}/.cache/huggingface ${localEnv:HOME}/.cache/devcontainer ${localEnv:HOME}/.claude/projects && touch ${localEnv:HOME}/.claude.json"
 }

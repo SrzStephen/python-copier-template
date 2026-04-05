@@ -5,12 +5,12 @@ set -euo pipefail
 # Fix ownership so vscode can create subdirectories (e.g. pre-commit).
 sudo chown vscode:vscode /home/vscode/.cache
 
-npm install -g @devcontainers/cli @anthropic-ai/claude-code
+npm install -g @devcontainers/cli
 
 if command -v claude &>/dev/null; then
   echo "Installing superpowers plugin for Claude Code..."
-  claude /plugin marketplace add obra/superpowers-marketplace
-  claude /plugin install superpowers@superpowers-marketplace
+  claude plugin marketplace add obra/superpowers-marketplace
+  claude plugin install superpowers@superpowers-marketplace
 else
   echo "Skipping superpowers install (claude CLI not found)."
 fi

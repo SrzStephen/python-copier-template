@@ -62,6 +62,7 @@
     "ghcr.io/tobiaschc/devcontainer-features/starship:1": {
       "userShell": "zsh"
     },
+    "ghcr.io/stu-bell/devcontainer-features/claude-code:0": {},
     "ghcr.io/pirpedro/features/just:1": {},
     {% if use_cuda %}
     "ghcr.io/devcontainers/features/nvidia-cuda:3": {
@@ -71,25 +72,35 @@
     {% endif %}
   },
   "forwardPorts": [37345],
-  {% if use_cuda %}
-  "hostRequirements": {
-    "gpu": "optional"
+  "portsAttributes": {
+    "37345": {
+      "label": "Claude Code OAuth",
+      "onAutoForward": "silent"
+    }
   },
-  {% endif %}
+  "otherPortsAttributes": {
+    "onAutoForward": "silent"
+  },
   "image": "mcr.microsoft.com/devcontainers/python:3.12",
   "mounts": [
     "source=${localEnv:HOME}/.cache/uv,target=/home/vscode/.cache/uv,type=bind,consistency=cached",
     "source=${localEnv:HOME}/.cache/huggingface,target=/home/vscode/.cache/huggingface,type=bind,consistency=cached",
-    "source=${localEnv:HOME}/.cache/devcontainer/apt_cache,target=/var/cache/apt,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.cache/devcontainer,target=/var/cache/apt,type=bind,consistency=cached",
     "source=${localEnv:HOME}/.claude.json,target=/home/vscode/.claude.json,type=bind,consistency=cached",
     "source=${localEnv:HOME}/.claude/projects,target=/home/vscode/.claude/projects,type=bind,consistency=cached"
   ],
+  "initializeCommand": "mkdir -p ${localEnv:HOME}/.cache/uv ${localEnv:HOME}/.cache/huggingface ${localEnv:HOME}/.cache/devcontainer ${localEnv:HOME}/.claude/projects && touch ${localEnv:HOME}/.claude.json",
   "name": "Python Dev",
   "postCreateCommand": "bash .devcontainer/post-create.sh",
   "postStartCommand": "bash .devcontainer/post-start.sh",
   "remoteEnv": {
     "VIRTUAL_ENV": "${containerWorkspaceFolder}/.venv",
     "PATH": "${containerWorkspaceFolder}/.venv/bin:${containerEnv:PATH}",
+    "CLAUDE_OAUTH_PORT": "37345"
+  },
+  "containerEnv":
+  {
+    "NODE_OPTIONS": "--dns-result-order=ipv4first",
     "CLAUDE_OAUTH_PORT": "37345"
   }
 }

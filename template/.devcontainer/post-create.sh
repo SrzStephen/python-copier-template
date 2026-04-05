@@ -1,7 +1,17 @@
 #!/bin/bash
 set -euo pipefail
 
-npm install -g @devcontainers/cli @anthropic-ai/claude-code
+# The .cache/uv bind mount causes Docker to create /home/vscode/.cache as root-owned.
+# Fix ownership so vscode can create subdirectories (e.g. pre-commit).
+sudo chown vscode:vscode /home/vscode/.cache
+
+if command -v claude &>/dev/null; then
+  echo "Installing superpowers plugin for Claude Code..."
+  claude plugin marketplace add obra/superpowers-marketplace
+  claude plugin install superpowers@superpowers-marketplace
+else
+  echo "Skipping superpowers install (claude CLI not found)."
+fi
 
 if [ -f pyproject.toml ]; then
   echo "pyproject.toml found, running uv sync..."

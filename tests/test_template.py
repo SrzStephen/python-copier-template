@@ -189,7 +189,6 @@ def test_devcontainer_is_valid_jsonc(
 def test_cuda_absent_by_default(generated: Path) -> None:
     content = (generated / ".devcontainer/devcontainer.json").read_text()
     assert "nvidia-cuda" not in content
-    assert "hostRequirements" not in content
 
 
 @pytest.fixture(scope="module")
@@ -211,12 +210,6 @@ def test_cuda_feature_present(generated_with_cuda: Path) -> None:
     content = (generated_with_cuda / ".devcontainer/devcontainer.json").read_text()
     assert "nvidia-cuda" in content
     assert "installCudnn" in content
-
-
-def test_cuda_host_requirements_present(generated_with_cuda: Path) -> None:
-    content = (generated_with_cuda / ".devcontainer/devcontainer.json").read_text()
-    assert "hostRequirements" in content
-    assert '"gpu"' in content
 
 
 @pytest.fixture(scope="module")
