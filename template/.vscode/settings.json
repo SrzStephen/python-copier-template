@@ -5,6 +5,7 @@
     "**/.worktrees": true,
     "**/.venv": true,
     "**/.pytest_cache": true,
-    "**/.hypothesis": true
+    "**/.hypothesis": true,
+    "**/.terraform": true
   }
 }

@@ -7,6 +7,21 @@ sudo chown vscode:vscode /home/vscode/.cache
 
 npm install -g @devcontainers/cli
 
+# Inject attribution into ~/.claude/settings.json if not already present.
+# settings.json is not bind-mounted from the host, so this initialises it
+# with an empty attribution block that tools can populate later.
+CLAUDE_SETTINGS="$HOME/.claude/settings.json"
+if [ ! -f "$CLAUDE_SETTINGS" ] || ! jq -e '.attribution' "$CLAUDE_SETTINGS" &>/dev/null; then
+  echo "Injecting attribution block into Claude settings..."
+  mkdir -p "$(dirname "$CLAUDE_SETTINGS")"
+  if [ -f "$CLAUDE_SETTINGS" ]; then
+    tmp=$(mktemp)
+    jq '. + {"attribution": {"commit": "", "pr": ""}}' "$CLAUDE_SETTINGS" > "$tmp" && mv "$tmp" "$CLAUDE_SETTINGS"
+  else
+    printf '{"attribution":{"commit":"","pr":""}}\n' > "$CLAUDE_SETTINGS"
+  fi
+fi
+
 if command -v claude &>/dev/null; then
   echo "Installing superpowers plugin for Claude Code..."
   claude plugin marketplace add obra/superpowers-marketplace

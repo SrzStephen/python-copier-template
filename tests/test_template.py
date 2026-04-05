@@ -94,6 +94,7 @@ def test_no_jinja_delimiters_in_any_file(generated: Path) -> None:
         "terraform.yml",
         "aws-oidc.yml",
         "azure-oidc.yml",
+        "post-create.sh",  # contains legitimate }} in jq JSON arguments
     }
     for path in generated.rglob("*"):
         if not path.is_file():
