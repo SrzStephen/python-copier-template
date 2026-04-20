@@ -1,5 +1,12 @@
 #!/bin/bash
 set -euo pipefail
+git config pull.rebase true
+git config rebase.autoStash true
+git config init.defaultBranch main
+git config alias.lg "log --oneline --graph --decorate --all"
+git config alias.change "git log --format=format: --name-only --since='1 year ago' | sort | uniq -c | sort -nr | head -20"
+git config color.ui auto
+
 
 # The .cache/uv bind mount causes Docker to create /home/vscode/.cache as root-owned.
 # Fix ownership so vscode can create subdirectories (e.g. pre-commit).
@@ -18,10 +25,11 @@ if [ ! -f "$CLAUDE_SETTINGS" ] || ! jq -e '.attribution' "$CLAUDE_SETTINGS" &>/d
   fi
 fi
 
-if command -v claude &>/dev/null; then
+CLAUDE_BIN=$(command -v claude 2>/dev/null || echo "$HOME/.local/bin/claude")
+if [ -x "$CLAUDE_BIN" ]; then
   echo "Installing superpowers plugin for Claude Code..."
-  claude plugin marketplace add obra/superpowers-marketplace
-  claude plugin install superpowers@superpowers-marketplace
+  "$CLAUDE_BIN" plugin marketplace add obra/superpowers-marketplace
+  "$CLAUDE_BIN" plugin install superpowers@superpowers-marketplace
 else
   echo "Skipping superpowers install (claude CLI not found)."
 fi
