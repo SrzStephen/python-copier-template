@@ -91,7 +91,7 @@
     "source=${localEnv:HOME}/.claude.json,target=/home/vscode/.claude.json,type=bind,consistency=cached",
     "source=${localEnv:HOME}/.claude/projects,target=/home/vscode/.claude/projects,type=bind,consistency=cached"
   ],
-  "initializeCommand": "mkdir -p ${localEnv:HOME}/.cache/uv ${localEnv:HOME}/.cache/huggingface ${localEnv:HOME}/.cache/devcontainer ${localEnv:HOME}/.claude/projects && touch ${localEnv:HOME}/.claude.json",
+  "initializeCommand": "mkdir -p ${localEnv:HOME}/.cache/uv ${localEnv:HOME}/.cache/huggingface ${localEnv:HOME}/.cache/devcontainer ${localEnv:HOME}/.claude/projects && touch ${localEnv:HOME}/.claude.json && chown $(stat -c '%u:%g' ${localEnv:HOME}) ${localEnv:HOME}/.cache/uv ${localEnv:HOME}/.cache/huggingface ${localEnv:HOME}/.cache/devcontainer ${localEnv:HOME}/.claude/projects ${localEnv:HOME}/.claude.json",
   "name": "Python Dev",
   "postCreateCommand": "bash .devcontainer/post-create.sh",
   "postStartCommand": "bash .devcontainer/post-start.sh",

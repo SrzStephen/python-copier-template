@@ -14,7 +14,7 @@ The intention for this is a **starting point** for new python projects that I cr
 - GitHub Actions CI (lint, typecheck, test — parallel jobs)
 - Optional Terraform CI/CD workflow (fmt, lint, plan, apply)
 - devcontainer (VS Code), with optional CUDA/GPU, AWS CLI, or Azure CLI support
-- devcontainer caches uv, apt, HuggingFace, and Claude Code auth/project history
+- devcontainer caches uv, apt, HuggingFace, and Claude Code auth/project history — host directories are created with the correct user permissions via `initializeCommand` (prevents root-owned directories on Linux with rootful Docker)
 - typer CLI entrypoint via uv script
 - justfile for common commands
 - GitHub Issue templates (bug report, feature request)
