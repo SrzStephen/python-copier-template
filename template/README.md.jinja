@@ -34,17 +34,17 @@ The usual steps
 
 ## Python
 * install [uv](https://docs.astral.sh/uv/getting-started/installation/)
-* run `uv sync --all-groups` to install dependencies
+* run `uv sync --all-extras` to install dependencies
 
-## Pre-commit
-Pre-commit gets installed as part of the `uv` dev dependencies
+## prek
+prek gets installed as part of the `uv` dev dependencies
 
-Register pre-commit to run the `.pre-commit-config.yaml` on commit via `uv run pre-commit install`
+Register prek to run the `prek.toml` on commit via `uv run prek install`
 
-Run ad hoc with `uv run pre-commit`
+Run ad hoc with `uv run prek run --all-files`
 
 ### Commit format
-pre-commit in this repository is set to enforce [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/).
+prek in this repository is set to enforce [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/).
 ```
 <type>[optional scope]: <description>
 

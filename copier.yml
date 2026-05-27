@@ -55,6 +55,11 @@ use_terraform:
   help: "Include Terraform CI/CD workflow?"
   default: false
 
+use_docker_in_docker:
+  type: bool
+  help: "Include Docker-in-Docker support in the devcontainer?"
+  default: false
+
 use_cuda:
   type: bool
   help: "Requires NVIDIA GPU / CUDA support in the devcontainer?"

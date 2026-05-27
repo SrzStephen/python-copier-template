@@ -5,10 +5,12 @@ all: lint typecheck test
 lint:
     uvx ruff check .
     uvx ruff format --check .
+    npx prettier --check .
 
 lint-fix:
     uvx ruff check --fix .
     uvx ruff format .
+    npx prettier --write .
 
 typecheck:
     uv run ty check src/
@@ -19,9 +21,9 @@ test:
 test-fast:
     uv run pytest --no-cov -rsx
 
-pre-commit:
-    uv run pre-commit run --all-files
+prek:
+    uv run prek run --all-files
 
 setup:
-    uv sync --all-groups
-    uv run pre-commit install
+    uv sync --all-extras
+    uv run prek install

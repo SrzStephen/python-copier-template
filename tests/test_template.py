@@ -43,7 +43,7 @@ def test_expected_files_exist(generated: Path) -> None:
         "justfile",
         ".editorconfig",
         ".gitignore",
-        ".pre-commit-config.yaml",
+        "prek.toml",
         ".devcontainer/devcontainer.json",
         ".github/workflows/ci.yml",
         ".github/ISSUE_TEMPLATE/bug_report.md",

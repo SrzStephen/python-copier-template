@@ -10,19 +10,19 @@
     "ghcr.io/devcontainers/features/docker-in-docker:3.0.1": { "moby": false },
     "ghcr.io/devcontainer-community/devcontainer-features/github.com-cli:1": {},
     "ghcr.io/devcontainers/features/git:1": {},
-    "ghcr.io/devcontainers/features/node:2.0.0": {},
+    "ghcr.io/devcontainers/features/node:2.0.0": { "version": 24 },
     "ghcr.io/SrzStephen/devcontainer-features/just:0": {},
     "ghcr.io/SrzStephen/devcontainer-features/act:0": {},
     "ghcr.io/tobiaschc/devcontainer-features/starship:1": {
       "userShell": "zsh"
     },
-    "ghcr.io/SrzStephen/devcontainer-features/claude-code:0": {
+    "ghcr.io/SrzStephen/devcontainer-features/claude-code:1": {
       "marketplace": "https://github.com/obra/superpowers-marketplace",
       "plugin": "superpowers@superpowers-marketplace",
       "removeAttribution": true,
       "statusline": true
     },
-    "ghcr.io/SrzStephen/devcontainer-features/prek:0": {}
+    "ghcr.io/devcontainers-extra/features/prek:1": {}
   },
   "customizations": {
     "vscode": {
@@ -49,6 +49,15 @@
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "[python]": {
           "editor.defaultFormatter": "charliermarsh.ruff"
+        },
+        "[json]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[jsonc]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[markdown]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
         },
         "[just]": {
           "editor.formatOnSave": false
@@ -77,11 +86,17 @@
     "VIRTUAL_ENV": "${containerWorkspaceFolder}/.venv",
     "PATH": "${containerWorkspaceFolder}/.venv/bin:${containerEnv:PATH}"
   },
+  "containerEnv": {
+    "TZ": "${localEnv:TZ}"
+  },
   "mounts": [
     "source=${localEnv:HOME}/.cache/uv,target=/home/vscode/.cache/uv,type=bind,consistency=cached",
     "source=${localEnv:HOME}/.cache/huggingface,target=/home/vscode/.cache/huggingface,type=bind,consistency=cached",
     "source=${localEnv:HOME}/.cache/devcontainer,target=/var/cache/apt,type=bind,consistency=cached",
-    "source=${localEnv:HOME}/.claude/projects,target=/home/vscode/.claude/projects,type=bind,consistency=cached"
+    "source=${localEnv:HOME}/.claude/projects,target=/home/vscode/.claude/projects,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.config/gh,target=/home/vscode/.config/gh,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.npm,target=/home/vscode/.npm,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.cache/pre-commit,target=/home/vscode/.cache/pre-commit,type=bind,consistency=cached"
   ],
   "initializeCommand": "bash .devcontainer/initialize.sh"
 }
