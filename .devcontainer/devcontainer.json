@@ -7,15 +7,22 @@
     "ghcr.io/devcontainer-community/devcontainer-features/astral.sh-uv:1": {
       "shellautocompletion": true
     },
-    "ghcr.io/devcontainers/features/docker-in-docker:2": { "moby": false },
+    "ghcr.io/devcontainers/features/docker-in-docker:3.0.1": { "moby": false },
     "ghcr.io/devcontainer-community/devcontainer-features/github.com-cli:1": {},
     "ghcr.io/devcontainers/features/git:1": {},
-    "ghcr.io/devcontainers/features/node:1": {},
-    "ghcr.io/pirpedro/features/just:1": {},
+    "ghcr.io/devcontainers/features/node:2.0.0": {},
+    "ghcr.io/SrzStephen/devcontainer-features/just:0": {},
+    "ghcr.io/SrzStephen/devcontainer-features/act:0": {},
     "ghcr.io/tobiaschc/devcontainer-features/starship:1": {
       "userShell": "zsh"
     },
-    "ghcr.io/stu-bell/devcontainer-features/claude-code:0": {}
+    "ghcr.io/SrzStephen/devcontainer-features/claude-code:0": {
+      "marketplace": "https://github.com/obra/superpowers-marketplace",
+      "plugin": "superpowers@superpowers-marketplace",
+      "removeAttribution": true,
+      "statusline": true
+    },
+    "ghcr.io/SrzStephen/devcontainer-features/prek:0": {}
   },
   "customizations": {
     "vscode": {
@@ -66,31 +73,15 @@
       }
     }
   },
-  "forwardPorts": [37345],
-  "portsAttributes": {
-    "37345": {
-      "label": "Claude Code OAuth",
-      "onAutoForward": "silent"
-    }
-  },
-  "otherPortsAttributes": {
-    "onAutoForward": "silent"
-  },
   "remoteEnv": {
     "VIRTUAL_ENV": "${containerWorkspaceFolder}/.venv",
-    "PATH": "${containerWorkspaceFolder}/.venv/bin:${containerEnv:PATH}",
-    "CLAUDE_OAUTH_PORT": "37345"
-  },
-  "containerEnv": {
-    "NODE_OPTIONS": "--dns-result-order=ipv4first",
-    "CLAUDE_OAUTH_PORT": "37345"
+    "PATH": "${containerWorkspaceFolder}/.venv/bin:${containerEnv:PATH}"
   },
   "mounts": [
     "source=${localEnv:HOME}/.cache/uv,target=/home/vscode/.cache/uv,type=bind,consistency=cached",
     "source=${localEnv:HOME}/.cache/huggingface,target=/home/vscode/.cache/huggingface,type=bind,consistency=cached",
     "source=${localEnv:HOME}/.cache/devcontainer,target=/var/cache/apt,type=bind,consistency=cached",
-    "source=${localEnv:HOME}/.claude.json,target=/home/vscode/.claude.json,type=bind,consistency=cached",
     "source=${localEnv:HOME}/.claude/projects,target=/home/vscode/.claude/projects,type=bind,consistency=cached"
   ],
-  "initializeCommand": "mkdir -p ${localEnv:HOME}/.cache/uv ${localEnv:HOME}/.cache/huggingface ${localEnv:HOME}/.cache/devcontainer ${localEnv:HOME}/.claude/projects && touch ${localEnv:HOME}/.claude.json"
+  "initializeCommand": "bash .devcontainer/initialize.sh"
 }
