@@ -29,6 +29,7 @@ def _render(tmp_path: Path, extra_data: dict | None = None) -> dict:
         overwrite=True,
         quiet=True,
         unsafe=True,
+        vcs_ref="HEAD",
     )
     content = (tmp_path / ".devcontainer/devcontainer.json").read_text()
     return json5.loads(content)
