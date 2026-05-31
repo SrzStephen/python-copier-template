@@ -62,7 +62,6 @@ on:
 
 permissions:
   contents: write
-  id-token: write
 
 jobs:
   release:
