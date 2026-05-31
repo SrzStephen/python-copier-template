@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.1.1 (2026-05-31)
+
+### Bug Fixes
+
+- Use torch cu13 sources
+  ([`f0af753`](https://github.com/SrzStephen/python-copier-template/commit/f0af7530e8da96cb3c3d6def938e79ac3802d3a5))
+
+
 ## v1.1.0 (2026-05-31)
 
 ### Bug Fixes
