@@ -442,3 +442,6 @@ vite.config.ts.timestamp-*
 
 # Claude
 .claude
+
+# Superpowers
+docs/superpowers

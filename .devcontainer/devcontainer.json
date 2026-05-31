@@ -46,9 +46,15 @@
           "*": false
         },
         "editor.formatOnSave": true,
+        "editor.rulers": [88],
+        "prettier.printWidth": 88,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "[python]": {
-          "editor.defaultFormatter": "charliermarsh.ruff"
+          "editor.defaultFormatter": "charliermarsh.ruff",
+          "editor.codeActionsOnSave": {
+            "source.fixAll.ruff": "explicit",
+            "source.organizeImports.ruff": "explicit"
+          }
         },
         "[json]": {
           "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -62,8 +68,15 @@
         "[just]": {
           "editor.formatOnSave": false
         },
+        "[toml]": {
+          "editor.defaultFormatter": "tamasfe.even-better-toml"
+        },
+        "[mermaid]": {
+          "editor.formatOnSave": false
+        },
         "python.defaultInterpreterPath": "${containerWorkspaceFolder}/.venv/bin/python",
         "python.languageServer": "Pylance",
+        "ruff.nativeServer": "on",
         "ty.disableLanguageServices": true,
         "chat.disableAIFeatures": true,
         "python.testing.pytestArgs": ["tests"],
@@ -71,6 +84,13 @@
         "python.testing.pytestEnabled": true,
         "terminal.integrated.defaultProfile.linux": "zsh",
         "vscode-just.useSingleTerminal": true,
+        "files.trimTrailingWhitespace": true,
+        "files.insertFinalNewline": true,
+        "files.trimFinalNewlines": true,
+        "jupyter.notebookFileRoot": "${workspaceFolder}",
+        "[jupyter]": {
+          "editor.formatOnSave": false
+        },
         "files.exclude": {
           "**/__pycache__": true,
           "**/*.pyc": true,

@@ -25,8 +25,14 @@
         },
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.formatOnSave": true,
+        "editor.rulers": [88],
+        "prettier.printWidth": 88,
         "[python]": {
-          "editor.defaultFormatter": "charliermarsh.ruff"
+          "editor.defaultFormatter": "charliermarsh.ruff",
+          "editor.codeActionsOnSave": {
+            "source.fixAll.ruff": "explicit",
+            "source.organizeImports.ruff": "explicit"
+          }
         },
         "[json]": {
           "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -40,8 +46,15 @@
         "[just]": {
           "editor.formatOnSave": false
         },
+        "[toml]": {
+          "editor.defaultFormatter": "tamasfe.even-better-toml"
+        },
+        "[mermaid]": {
+          "editor.formatOnSave": false
+        },
         "python.defaultInterpreterPath": "${containerWorkspaceFolder}/.venv/bin/python",
         "python.languageServer": "Pylance",
+        "ruff.nativeServer": "on",
         "ty.disableLanguageServices": true,
         "chat.disableAIFeatures": true,
         "python.testing.pytestArgs": [
@@ -50,9 +63,16 @@
         "python.testing.unittestEnabled": false,
         "python.testing.pytestEnabled": true,
         "vscode-just.useSingleTerminal": true,
-        "terminal.integrated.defaultProfile.linux": "zsh"{% if use_terraform %},
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "files.trimTrailingWhitespace": true,
+        "files.insertFinalNewline": true,
+        "files.trimFinalNewlines": true,
+        "jupyter.notebookFileRoot": "${workspaceFolder}",
+        "[jupyter]": {
+          "editor.formatOnSave": false
+        }{% if use_terraform %},
         "[terraform]": {
-          "editor.defaultFormatter": "hashicorp.terraform",
+          "editor.defaultFormatter": "hashicorp.terraform"
         }{% endif %}
       }
     }
@@ -62,19 +82,25 @@
     {% if use_aws %}"ghcr.io/devcontainer-community/devcontainer-features/aws-cli:1": {},{% endif %}
     {% if use_azure %}"ghcr.io/devcontainers/features/azure-cli:1": {},{% endif %}
     {% if use_docker_in_docker %}"ghcr.io/devcontainers/features/docker-in-docker:2": {"moby": false},{% endif %}
-    {% if use_docker_in_docker and use_cuda %}"ghcr.io/SrzStephen/devcontainer-features/nvidia-container-toolkit:0": {},{% endif %}
+    {% if use_docker_in_docker and use_cuda %}"ghcr.io/srzstephen/devcontainer-features/nvidia-container-toolkit:0": {},{% endif %}
+
     "ghcr.io/devcontainer-community/devcontainer-features/astral.sh-uv:1": {
       "shellautocompletion": true
     },
-    "ghcr.io/devcontainers/features/rust:1": {},
     "ghcr.io/devcontainers/features/node:1": {},
     "ghcr.io/devcontainer-community/devcontainer-features/github.com-cli:1": {},
     "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/srzstephen/devcontainer-features/act:0": {},
     "ghcr.io/tobiaschc/devcontainer-features/starship:1": {
       "userShell": "zsh"
     },
-    "ghcr.io/stu-bell/devcontainer-features/claude-code:0": {},
-    "ghcr.io/pirpedro/features/just:1": {},
+    "ghcr.io/srzstephen/devcontainer-features/claude-code:0": {
+      "marketplace": "https://github.com/obra/superpowers-marketplace",
+      "plugin": "superpowers@superpowers-marketplace",
+      "removeAttribution": true,
+      "statusline": true
+    },
+    "ghcr.io/srzstephen/devcontainer-features/just:0": {},
     {% if use_cuda %}
     "ghcr.io/devcontainers/features/nvidia-cuda:3": {
       "installCudnn": true,
@@ -82,16 +108,7 @@
     },
     {% endif %}
   },
-  "forwardPorts": [37345],
   "portsAttributes": {
-    "37345": {
-      "label": "Claude Code OAuth",
-      "onAutoForward": "silent",
-      "visibility": "public"
-    }
-  },
-  "otherPortsAttributes": {
-    "onAutoForward": "silent"
   },
   "image": "mcr.microsoft.com/devcontainers/python:3.12",
   "mounts": [
@@ -110,12 +127,9 @@
   "remoteEnv": {
     "VIRTUAL_ENV": "${containerWorkspaceFolder}/.venv",
     "PATH": "${containerWorkspaceFolder}/.venv/bin:${containerEnv:PATH}",
-    "CLAUDE_OAUTH_PORT": "37345"
   },
   "containerEnv":
   {
-    "NODE_OPTIONS": "--dns-result-order=ipv4first",
-    "CLAUDE_OAUTH_PORT": "37345",
     "TZ": "${localEnv:TZ}"
   }
 }

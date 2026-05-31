@@ -2,10 +2,23 @@
   "files.exclude": {
     "**/__pycache__": true,
     "**/*.pyc": true,
-    "**/.worktrees": true,
+    "**/*.egg-info": true,
+    "**/.eggs": true,
+    "**/.mypy_cache": true,
+    "**/.ruff_cache": true,
+    "**/.tox": true,
     "**/.venv": true,
     "**/.pytest_cache": true,
     "**/.hypothesis": true,
-    "**/.terraform": true
+    "**/htmlcov": true,
+    "**/.worktrees": true,
+    "**/target": true,
+    "**/.terraform": true,
+    "**/terraform.tfstate": true,
+    "**/terraform.tfstate.backup": true,
+    "**/*.tfplan": true,
+    "**/cdk.out": true,
+    "**/.aws-sam": true,
+    "**/.azure": true
   }
 }
