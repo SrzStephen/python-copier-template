@@ -10,7 +10,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "json5>=0.13.0",
-    "pre-commit>=4.5.1",
+    "prek",
     "pytest>=8",
     "python-semantic-release>=10.5.3",
     "ty>=0.0.24",
