@@ -297,6 +297,32 @@ def test_nvidia_container_toolkit_absent_without_docker(tmp_path: Path) -> None:
     )
 
 
+def test_run_args_gpus_present_when_cuda_enabled(tmp_path: Path) -> None:
+    config = _render(tmp_path, {"use_cuda": True})
+    assert config.get("runArgs") == ["--gpus=all"], (
+        "Expected runArgs=['--gpus=all'] when use_cuda=True"
+    )
+
+
+def test_run_args_absent_when_cuda_disabled(tmp_path: Path) -> None:
+    config = _render(tmp_path, {"use_cuda": False})
+    assert "runArgs" not in config, "Unexpected runArgs when use_cuda=False"
+
+
+def test_host_requirements_gpu_present_when_cuda_enabled(tmp_path: Path) -> None:
+    config = _render(tmp_path, {"use_cuda": True})
+    assert config.get("hostRequirements", {}).get("gpu") == "optional", (
+        "Expected hostRequirements.gpu='optional' when use_cuda=True"
+    )
+
+
+def test_host_requirements_absent_when_cuda_disabled(tmp_path: Path) -> None:
+    config = _render(tmp_path, {"use_cuda": False})
+    assert "hostRequirements" not in config, (
+        "Unexpected hostRequirements when use_cuda=False"
+    )
+
+
 def test_terraform_formatter_setting_present_when_enabled(tmp_path: Path) -> None:
     config = _render(tmp_path, {"use_terraform": True})
     settings = config["customizations"]["vscode"]["settings"]
