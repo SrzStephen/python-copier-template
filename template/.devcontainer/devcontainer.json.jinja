@@ -81,7 +81,9 @@
     {% if use_terraform %}"ghcr.io/devcontainers/features/terraform:1": {},{% endif %}
     {% if use_aws %}"ghcr.io/devcontainer-community/devcontainer-features/aws-cli:1": {},{% endif %}
     {% if use_azure %}"ghcr.io/devcontainers/features/azure-cli:1": {},{% endif %}
-    {% if use_docker_in_docker %}"ghcr.io/devcontainers/features/docker-in-docker:2": {"moby": false},{% endif %}
+    {% if use_docker_in_docker %}"ghcr.io/devcontainers/features/docker-in-docker:2": {"moby": false},
+    "ghcr.io/srzstephen/devcontainer-features/act:0": {},
+    {% endif %}
     {% if use_docker_in_docker and use_cuda %}"ghcr.io/srzstephen/devcontainer-features/nvidia-container-toolkit:0": {},{% endif %}
 
     "ghcr.io/devcontainer-community/devcontainer-features/astral.sh-uv:1": {
@@ -90,7 +92,7 @@
     "ghcr.io/devcontainers/features/node:1": {},
     "ghcr.io/devcontainer-community/devcontainer-features/github.com-cli:1": {},
     "ghcr.io/devcontainers/features/git:1": {},
-    "ghcr.io/srzstephen/devcontainer-features/act:0": {},
+    "ghcr.io/srzstephen/devcontainer-features/bash-language-server:0": {"installShellcheck": true, "installShellfmt": true},
     "ghcr.io/tobiaschc/devcontainer-features/starship:1": {
       "userShell": "zsh"
     },
@@ -100,7 +102,7 @@
       "removeAttribution": true,
       "statusline": true
     },
-    "ghcr.io/srzstephen/devcontainer-features/just:0": {},
+    "ghcr.io/srzstephen/devcontainer-features/just:0": {"lspVersion": "latest"},
     {% if use_cuda %}
     "ghcr.io/devcontainers/features/nvidia-cuda:3": {
       "installCudnn": true,
@@ -108,8 +110,7 @@
     },
     {% endif %}
   },
-  "portsAttributes": {
-  },
+  "portsAttributes": {},
   "image": "mcr.microsoft.com/devcontainers/python:3.12",
   "mounts": [
     "source=${localEnv:HOME}/.cache/uv,target=/home/vscode/.cache/uv,type=bind,consistency=cached",
@@ -126,10 +127,9 @@
   "postStartCommand": "bash .devcontainer/post-start.sh",
   "remoteEnv": {
     "VIRTUAL_ENV": "${containerWorkspaceFolder}/.venv",
-    "PATH": "${containerWorkspaceFolder}/.venv/bin:${containerEnv:PATH}",
+    "PATH": "${containerWorkspaceFolder}/.venv/bin:${containerEnv:PATH}"
   },
-  "containerEnv":
-  {
+  "containerEnv": {
     "TZ": "${localEnv:TZ}"
   }{% if use_cuda %},
   "runArgs": ["--gpus=all"],

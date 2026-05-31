@@ -30,6 +30,18 @@ dev = [
 [tool.uv]
 package = true
 exclude-newer = "3d"
+{% if use_cuda %}
+
+[[tool.uv.index]]
+name = "pytorch-cu130"
+url = "https://download.pytorch.org/whl/cu130"
+explicit = true
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cu130" }]
+torchvision = [{ index = "pytorch-cu130" }]
+torchaudio = [{ index = "pytorch-cu130" }]
+{% endif %}
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

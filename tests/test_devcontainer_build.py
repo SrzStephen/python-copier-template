@@ -41,6 +41,7 @@ def _copy(tmp_path: Path, extra_data: dict) -> None:
         overwrite=True,
         quiet=True,
         unsafe=True,
+        vcs_ref="HEAD",
     )
 
 

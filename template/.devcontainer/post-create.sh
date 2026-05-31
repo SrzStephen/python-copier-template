@@ -22,7 +22,9 @@ else
 fi
 
 if [ -f prek.toml ]; then
-  if uv pip show prek &>/dev/null; then
+  if ! git rev-parse --git-dir &>/dev/null; then
+    echo "Skipping prek install (not a git repository)."
+  elif uv pip show prek &>/dev/null; then
     echo "prek config and package found, installing hooks..."
     uv run prek install
   else
