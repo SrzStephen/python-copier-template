@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.1.2 (2026-06-01)
+
+### Bug Fixes
+
+- Bash-ide default formatter rules
+  ([`4da34ac`](https://github.com/SrzStephen/python-copier-template/commit/4da34ac98484fe154bde618f5caed9d8b2033ce8))
+
+
 ## v1.1.1 (2026-05-31)
 
 ### Bug Fixes
