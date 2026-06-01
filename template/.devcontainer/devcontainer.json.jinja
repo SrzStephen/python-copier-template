@@ -14,6 +14,7 @@
         "github.vscode-github-actions",
         "GitHub.vscode-pull-request-github",
         "nefrob.vscode-just-syntax",
+        "mads-hartmann.bash-ide-vscode",
         "astral-sh.ty"{% if use_terraform %},
         "hashicorp.terraform"{% endif %}{% if use_aws %},
         "amazonwebservices.aws-toolkit-vscode"{% endif %}{% if use_azure %},
@@ -52,6 +53,9 @@
         "[mermaid]": {
           "editor.formatOnSave": false
         },
+        "[shellscript]": {
+          "editor.defaultFormatter": "mads-hartmann.bash-ide-vscode"
+        },
         "python.defaultInterpreterPath": "${containerWorkspaceFolder}/.venv/bin/python",
         "python.languageServer": "Pylance",
         "ruff.nativeServer": "on",
@@ -60,6 +64,8 @@
         "python.testing.pytestArgs": [
           "tests"
         ],
+        "bashIde.shellcheckPath": "/usr/bin/shellcheck",
+        "bashIde.shfmt.path": "/usr/bin/shfmt",
         "python.testing.unittestEnabled": false,
         "python.testing.pytestEnabled": true,
         "vscode-just.useSingleTerminal": true,
