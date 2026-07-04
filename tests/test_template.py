@@ -1,5 +1,6 @@
 """Tests to verify the copier template generates correctly."""
 
+import json
 import subprocess
 from pathlib import Path
 
@@ -44,6 +45,9 @@ def test_expected_files_exist(generated: Path) -> None:
         ".editorconfig",
         ".gitignore",
         "prek.toml",
+        "renovate.json",
+        ".vscode/settings.json",
+        ".vscode/extensions.json",
         ".devcontainer/devcontainer.json",
         ".github/workflows/ci.yml",
         ".github/ISSUE_TEMPLATE/bug_report.md",
@@ -77,6 +81,42 @@ def test_cli_rendered(generated: Path) -> None:
     content = (generated / "src/my_tool/cli.py").read_text()
     assert "Hello from My Tool!" in content
     assert "My Tool" in content
+
+
+def test_prek_hooks_rendered(generated: Path) -> None:
+    content = (generated / "prek.toml").read_text()
+    # Core hooks plus the added formatter/linter coverage so prek is the single
+    # source of truth enforced by CI.
+    for hook in [
+        "ruff",
+        "ruff-format",
+        "prettier",
+        "shellcheck",
+        "shfmt",
+        "actionlint",
+        "uv-lock",
+        "gitleaks",
+        "conventional-pre-commit",
+    ]:
+        assert hook in content, f"Missing prek hook: {hook}"
+
+
+def test_extensions_json_rendered(generated: Path) -> None:
+    content = (generated / ".vscode/extensions.json").read_text()
+    data = json.loads(content)  # must be strict-valid JSON
+    recommendations = data["recommendations"]
+    assert "charliermarsh.ruff" in recommendations
+    assert "astral-sh.ty" in recommendations
+    # Cloud-only extensions gated off by default
+    assert "hashicorp.terraform" not in recommendations
+    assert "amazonwebservices.aws-toolkit-vscode" not in recommendations
+
+
+def test_renovate_rendered(generated: Path) -> None:
+    content = (generated / "renovate.json").read_text()
+    data = json.loads(content)  # must be strict-valid JSON
+    assert "config:recommended" in data["extends"]
+    assert data["reviewers"] == ["testuser"]
 
 
 def test_ci_workflow_rendered(generated: Path) -> None:

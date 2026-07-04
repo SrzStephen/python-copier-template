@@ -14,17 +14,16 @@
 
 Common tasks are managed via [just](https://github.com/casey/just):
 
-| Command         | Description                        |
-|-----------------|------------------------------------|
-| `just`          | Run lint, typecheck, and tests     |
-| `just lint`     | Lint and check formatting          |
-| `just lint-fix` | Auto-fix lint and formatting       |
-| `just typecheck`| Run type checking                  |
-| `just test`     | Run tests                          |
-| `just test-fast`| Run tests in parallel (no cov)     |
-| `just pre-commit`| Run pre-commit on all files       |
-| `just setup`    | Install deps and pre-commit hooks  |
-
+| Command           | Description                       |
+| ----------------- | --------------------------------- |
+| `just`            | Run lint, typecheck, and tests    |
+| `just lint`       | Lint and check formatting         |
+| `just lint-fix`   | Auto-fix lint and formatting      |
+| `just typecheck`  | Run type checking                 |
+| `just test`       | Run tests                         |
+| `just test-fast`  | Run tests in parallel (no cov)    |
+| `just pre-commit` | Run pre-commit on all files       |
+| `just setup`      | Install deps and pre-commit hooks |
 
 ## Setup
 
@@ -33,10 +32,12 @@ This repository is set up to run out of a [devcontainer](https://code.visualstud
 The usual steps
 
 ## Python
-* install [uv](https://docs.astral.sh/uv/getting-started/installation/)
-* run `uv sync --all-extras` to install dependencies
+
+- install [uv](https://docs.astral.sh/uv/getting-started/installation/)
+- run `uv sync --all-extras` to install dependencies
 
 ## prek
+
 prek gets installed as part of the `uv` dev dependencies
 
 Register prek to run the `prek.toml` on commit via `uv run prek install`
@@ -44,7 +45,9 @@ Register prek to run the `prek.toml` on commit via `uv run prek install`
 Run ad hoc with `uv run prek run --all-files`
 
 ### Commit format
+
 prek in this repository is set to enforce [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/).
+
 ```
 <type>[optional scope]: <description>
 
@@ -54,28 +57,29 @@ prek in this repository is set to enforce [conventional commits](https://www.con
 ```
 
 Examples:
+
 ```
 feat: allow provided config object to extend other configs
 feat!: send an email to the customer when a product is shipped
 feat(api)!: send an email to the customer when a product is shipped
 ```
 
-{% if use_terraform %}
+{% if use_terraform -%}
 ## Terraform
 
-* [install terraform](https://developer.hashicorp.com/terraform/install)
-* navigate to the terraform directory (generally `infra`)
-* terraform init
+- [install terraform](https://developer.hashicorp.com/terraform/install)
+- navigate to the terraform directory (generally `infra`)
+- terraform init
 
-{% endif %}
-
+{% endif -%}
 ## Just
 
-* install [just](https://github.com/casey/just?tab=readme-ov-file#installation)
+- install [just](https://github.com/casey/just?tab=readme-ov-file#installation)
+{%- if use_cuda %}
 
-{% if use_cuda %}
 ## CUDA
+
 For Cuda support to work you need in install the [Nvidia Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/index.html).
 
 Based on a quick google search, the only way for this to work under windows is to use docker with WSL, but I have only tested this in linux.
-{% endif %}
+{%- endif %}

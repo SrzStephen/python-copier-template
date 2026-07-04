@@ -244,6 +244,7 @@ __marimo__/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+!.vscode/extensions.json.jinja
 !.vscode/*.code-snippets
 !*.code-workspace
 

@@ -20,5 +20,20 @@
     "**/cdk.out": true,
     "**/.aws-sam": true,
     "**/.azure": true
-  }
+  },
+  "search.exclude": {
+    "**/__pycache__": true,
+    "**/*.egg-info": true,
+    "**/.mypy_cache": true,
+    "**/.ruff_cache": true,
+    "**/.tox": true,
+    "**/.venv": true,
+    "**/.pytest_cache": true,
+    "**/htmlcov": true,
+    "**/.terraform": true,
+    "**/cdk.out": true,
+    "**/uv.lock": true
+  },
+  "python.analysis.typeCheckingMode": "off",
+  "ruff.importStrategy": "fromEnvironment"
 }

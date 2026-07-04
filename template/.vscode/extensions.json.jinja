@@ -1,0 +1,24 @@
+{
+  "recommendations": [
+    "anthropic.claude-code",
+    "ms-python.python",
+    "charliermarsh.ruff",
+    "ms-python.vscode-pylance",
+    "ms-python.debugpy",
+    "ms-toolsai.jupyter",
+    "tamasfe.even-better-toml",
+    "MermaidChart.vscode-mermaid-chart",
+    "esbenp.prettier-vscode",
+    "github.vscode-github-actions",
+    "GitHub.vscode-pull-request-github",
+    "nefrob.vscode-just-syntax",
+    "mads-hartmann.bash-ide-vscode",
+    "redhat.vscode-yaml",
+    "usernamehw.errorlens",
+    "astral-sh.ty"{% if use_terraform %},
+    "hashicorp.terraform"{% endif %}{% if use_docker_in_docker %},
+    "ms-azuretools.vscode-docker"{% endif %}{% if use_aws %},
+    "amazonwebservices.aws-toolkit-vscode"{% endif %}{% if use_azure %},
+    "ms-vscode.vscode-node-azure-pack"{% endif %}
+  ]
+}
