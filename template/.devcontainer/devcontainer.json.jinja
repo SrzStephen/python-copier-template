@@ -17,74 +17,18 @@
         "mads-hartmann.bash-ide-vscode",
         "redhat.vscode-yaml",
         "usernamehw.errorlens",
-        "astral-sh.ty"{% if use_terraform %},
+        "christian-kohler.path-intellisense",
+        "meta.pyrefly"{% if use_terraform %},
         "hashicorp.terraform"{% endif %}{% if use_docker_in_docker %},
         "ms-azuretools.vscode-docker"{% endif %}{% if use_aws %},
         "amazonwebservices.aws-toolkit-vscode"{% endif %}{% if use_azure %},
         "ms-vscode.vscode-node-azure-pack"{% endif %}
       ],
       "settings": {
-        "github.copilot.enable": {
-          "*": false
-        },
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.formatOnSave": true,
-        "editor.rulers": [88],
-        "prettier.printWidth": 88,
-        "[python]": {
-          "editor.defaultFormatter": "charliermarsh.ruff",
-          "editor.codeActionsOnSave": {
-            "source.fixAll.ruff": "explicit",
-            "source.organizeImports.ruff": "explicit"
-          }
-        },
-        "[json]": {
-          "editor.defaultFormatter": "esbenp.prettier-vscode"
-        },
-        "[jsonc]": {
-          "editor.defaultFormatter": "esbenp.prettier-vscode"
-        },
-        "[markdown]": {
-          "editor.defaultFormatter": "esbenp.prettier-vscode"
-        },
-        "[just]": {
-          "editor.formatOnSave": false
-        },
-        "[toml]": {
-          "editor.defaultFormatter": "tamasfe.even-better-toml"
-        },
-        "[mermaid]": {
-          "editor.formatOnSave": false
-        },
-        "[shellscript]": {
-          "editor.defaultFormatter": "mads-hartmann.bash-ide-vscode"
-        },
         "python.defaultInterpreterPath": "${containerWorkspaceFolder}/.venv/bin/python",
-        "python.languageServer": "Pylance",
-        "python.analysis.typeCheckingMode": "off",
-        "ruff.nativeServer": "on",
-        "ruff.importStrategy": "fromEnvironment",
-        "ty.disableLanguageServices": true,
-        "chat.disableAIFeatures": true,
-        "python.testing.pytestArgs": [
-          "tests"
-        ],
         "bashIde.shellcheckPath": "/usr/bin/shellcheck",
         "bashIde.shfmt.path": "/usr/bin/shfmt",
-        "python.testing.unittestEnabled": false,
-        "python.testing.pytestEnabled": true,
-        "vscode-just.useSingleTerminal": true,
-        "terminal.integrated.defaultProfile.linux": "zsh",
-        "files.trimTrailingWhitespace": true,
-        "files.insertFinalNewline": true,
-        "files.trimFinalNewlines": true,
-        "jupyter.notebookFileRoot": "${workspaceFolder}",
-        "[jupyter]": {
-          "editor.formatOnSave": false
-        }{% if use_terraform %},
-        "[terraform]": {
-          "editor.defaultFormatter": "hashicorp.terraform"
-        }{% endif %}
+        "terminal.integrated.defaultProfile.linux": "zsh"
       }
     }
   },

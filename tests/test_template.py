@@ -34,6 +34,7 @@ def generated(tmp_path_factory: pytest.TempPathFactory) -> Path:
         overwrite=True,
         quiet=True,
         unsafe=True,
+        vcs_ref="HEAD",
     )
     return dst
 
@@ -106,7 +107,7 @@ def test_extensions_json_rendered(generated: Path) -> None:
     data = json.loads(content)  # must be strict-valid JSON
     recommendations = data["recommendations"]
     assert "charliermarsh.ruff" in recommendations
-    assert "astral-sh.ty" in recommendations
+    assert "meta.pyrefly" in recommendations
     # Cloud-only extensions gated off by default
     assert "hashicorp.terraform" not in recommendations
     assert "amazonwebservices.aws-toolkit-vscode" not in recommendations
@@ -182,6 +183,7 @@ def test_python_version_variants(tmp_path: Path, python_version: str) -> None:
         overwrite=True,
         quiet=True,
         unsafe=True,
+        vcs_ref="HEAD",
     )
     pyproject = (tmp_path / "pyproject.toml").read_text()
     first_version = python_version.split(",")[0]
@@ -222,6 +224,7 @@ def test_devcontainer_is_valid_jsonc(
         overwrite=True,
         quiet=True,
         unsafe=True,
+        vcs_ref="HEAD",
     )
     content = (tmp_path / ".devcontainer/devcontainer.json").read_text()
     json5.loads(content)  # raises if invalid
@@ -243,6 +246,7 @@ def generated_with_cuda(tmp_path_factory: pytest.TempPathFactory) -> Path:
         overwrite=True,
         quiet=True,
         unsafe=True,
+        vcs_ref="HEAD",
     )
     return dst
 
@@ -264,6 +268,7 @@ def generated_with_terraform(tmp_path_factory: pytest.TempPathFactory) -> Path:
         overwrite=True,
         quiet=True,
         unsafe=True,
+        vcs_ref="HEAD",
     )
     return dst
 
@@ -298,6 +303,7 @@ def generated_with_aws(tmp_path_factory: pytest.TempPathFactory) -> Path:
         overwrite=True,
         quiet=True,
         unsafe=True,
+        vcs_ref="HEAD",
     )
     return dst
 
@@ -333,6 +339,7 @@ def generated_with_azure(tmp_path_factory: pytest.TempPathFactory) -> Path:
         overwrite=True,
         quiet=True,
         unsafe=True,
+        vcs_ref="HEAD",
     )
     return dst
 

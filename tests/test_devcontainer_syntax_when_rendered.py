@@ -1,5 +1,6 @@
 """Tests that the rendered devcontainer.json has correct syntax and structure."""
 
+import json
 from pathlib import Path
 
 import copier
@@ -325,16 +326,16 @@ def test_host_requirements_absent_when_cuda_disabled(tmp_path: Path) -> None:
 
 
 def test_terraform_formatter_setting_present_when_enabled(tmp_path: Path) -> None:
-    config = _render(tmp_path, {"use_terraform": True})
-    settings = config["customizations"]["vscode"]["settings"]
+    _render(tmp_path, {"use_terraform": True})
+    settings = json.loads((tmp_path / ".vscode/settings.json").read_text())
     assert "[terraform]" in settings, (
         "Expected [terraform] formatter setting when use_terraform=True"
     )
 
 
 def test_terraform_formatter_setting_absent_when_disabled(tmp_path: Path) -> None:
-    config = _render(tmp_path, {"use_terraform": False})
-    settings = config["customizations"]["vscode"]["settings"]
+    _render(tmp_path, {"use_terraform": False})
+    settings = json.loads((tmp_path / ".vscode/settings.json").read_text())
     assert "[terraform]" not in settings, (
         "Unexpected [terraform] formatter setting when use_terraform=False"
     )
@@ -344,7 +345,7 @@ def test_terraform_formatter_setting_absent_when_disabled(tmp_path: Path) -> Non
 def test_vscode_settings_has_required_keys(
     tmp_path: Path, use_terraform: bool, use_cuda: bool, use_aws: bool, use_azure: bool
 ) -> None:
-    config = _render(
+    _render(
         tmp_path,
         {
             "use_terraform": use_terraform,
@@ -353,11 +354,13 @@ def test_vscode_settings_has_required_keys(
             "use_azure": use_azure,
         },
     )
-    settings = config["customizations"]["vscode"]["settings"]
-    required = {
-        "python.defaultInterpreterPath",
-        "python.testing.pytestEnabled",
-        "editor.formatOnSave",
-    }
-    missing = required - settings.keys()
+    devcontainer_settings = json5.loads(
+        (tmp_path / ".devcontainer/devcontainer.json").read_text()
+    )["customizations"]["vscode"]["settings"]
+    vscode_settings = json.loads((tmp_path / ".vscode/settings.json").read_text())
+    assert "python.defaultInterpreterPath" in devcontainer_settings, (
+        "Missing devcontainer vscode setting: python.defaultInterpreterPath"
+    )
+    required = {"python.testing.pytestEnabled", "editor.formatOnSave"}
+    missing = required - vscode_settings.keys()
     assert not missing, f"Missing vscode settings keys: {missing}"

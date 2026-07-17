@@ -8,7 +8,7 @@ The intention for this is a **starting point** for new python projects that I cr
 
 - uv build backend
 - ruff (lint + format)
-- ty (type checker)
+- pyrefly (type checker)
 - pytest with coverage
 - pre-commit hooks
 - GitHub Actions CI (lint, typecheck, test — parallel jobs)

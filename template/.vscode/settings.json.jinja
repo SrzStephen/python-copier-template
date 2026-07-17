@@ -1,0 +1,117 @@
+{
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/*.pyc": true,
+    "**/*.egg-info": true,
+    "**/.eggs": true,
+    "**/.mypy_cache": true,
+    "**/.ruff_cache": true,
+    "**/.pyrefly_cache": true,
+    "**/.tox": true,
+    "**/.venv": true,
+    "**/.pytest_cache": true,
+    "**/.hypothesis": true,
+    "**/htmlcov": true,
+    "**/.worktrees": true,
+    "**/target": true,
+    "**/.terraform": true,
+    "**/terraform.tfstate": true,
+    "**/terraform.tfstate.backup": true,
+    "**/*.tfplan": true,
+    "**/cdk.out": true,
+    "**/.aws-sam": true,
+    "**/.azure": true
+  },
+  "search.exclude": {
+    "**/__pycache__": true,
+    "**/*.egg-info": true,
+    "**/.mypy_cache": true,
+    "**/.ruff_cache": true,
+    "**/.pyrefly_cache": true,
+    "**/.tox": true,
+    "**/.venv": true,
+    "**/.pytest_cache": true,
+    "**/htmlcov": true,
+    "**/.terraform": true,
+    "**/cdk.out": true,
+    "**/uv.lock": true
+  },
+  "files.watcherExclude": {
+    "**/.venv/**": true,
+    "**/.terraform/**": true,
+    "**/.ruff_cache/**": true,
+    "**/.pyrefly_cache/**": true,
+    "**/.pytest_cache/**": true,
+    "**/.mypy_cache/**": true,
+    "**/htmlcov/**": true
+  },
+  "github.copilot.enable": {
+    "*": false
+  },
+  "chat.disableAIFeatures": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.rulers": [88],
+  "editor.suggest.preview": true,
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+  "prettier.printWidth": 88,
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.ruff": "explicit",
+      "source.organizeImports.ruff": "explicit"
+    }
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[just]": {
+    "editor.formatOnSave": false
+  },
+  "[toml]": {
+    "editor.defaultFormatter": "tamasfe.even-better-toml"
+  },
+  "[mermaid]": {
+    "editor.formatOnSave": false
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "mads-hartmann.bash-ide-vscode"
+  },
+  "[jupyter]": {
+    "editor.formatOnSave": false
+  },
+  {% if use_terraform -%}
+  "[terraform]": {
+    "editor.defaultFormatter": "hashicorp.terraform"
+  },
+  "[terraform-vars]": {
+    "editor.defaultFormatter": "hashicorp.terraform"
+  },
+  "terraform.validation.enableEnhancedValidation": true,
+  {% endif -%}
+  "python.languageServer": "Pylance",
+  "python.analysis.typeCheckingMode": "off",
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.completeFunctionParens": true,
+  "ruff.nativeServer": "on",
+  "ruff.importStrategy": "fromEnvironment",
+  "python.testing.pytestArgs": ["tests"],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true,
+  "vscode-just.useSingleTerminal": true,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "jupyter.notebookFileRoot": "${workspaceFolder}",
+  "yaml.validate": true,
+  "yaml.schemaStore.enable": true,
+  "json.schemaDownload.enable": true
+}

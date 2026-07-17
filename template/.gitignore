@@ -16,7 +16,7 @@ htmlcov/
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/
-.ty_cache/
+.pyrefly_cache/
 *.log
 .DS_Store
 
@@ -241,6 +241,7 @@ __marimo__/
 # VSCode
 .vscode/*
 !.vscode/settings.json
+!.vscode/settings.json.jinja
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
